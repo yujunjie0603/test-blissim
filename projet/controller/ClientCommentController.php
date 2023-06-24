@@ -19,7 +19,6 @@ class ClientCommentController
         try {
             foreach($param as $key => $value) {
                 if (array_key_exists($key, $this->client_comment->liste_fields)) {
-                    echo "999999999999999999999999";
                     $this->client_comment->$key = $value;
                 }
             }
