@@ -1,0 +1,38 @@
+version: '3.3'
+
+services:
+ php:
+  build:
+   context: .
+   dockerfile: Dockerfile
+  container_name: phpmysqli
+  depends_on:
+   - db
+  image: php:blissim
+  volumes:
+   - ./projet:/var/www/html/
+  ports:
+   - 82:80
+ db:
+  image: mysql
+  command: --default-authentication-plugin=mysql_native_password
+  volumes:
+    - ./db:/var/lib/mysql
+  environment:
+   MYSQL_ROOT_PASSWORD: blissim
+   MYSQL_DATABASE: blissim
+   MYSQL_USER: user_blissim
+   MYSQL_PASSWORD: pwd_blissim
+  ports:
+   - 3382:3306
+ phpmya:
+  image: phpmyadmin/phpmyadmin:latest
+  container_name: phpmyadmin
+  environment:
+   PMA_ARBITRARY: 1
+   PMA_HOST: db
+   PMA_USER: user_blissim
+   PMA_PASSWORD: pwd_blissim
+   UPLOAD_LIMIT: 20M
+  ports:
+   - 8082:80
