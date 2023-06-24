@@ -1,9 +1,9 @@
 <?php
 include_once("../model/Client.php");
-
-class ClientsLoginController
+include_once("../model/ClientAuth.php");
+include_once("../factory/TableFactory.php");
+class LoginController
 {
-
     /**
      * login
      * @param mixed $login
@@ -15,7 +15,8 @@ class ClientsLoginController
         $client = $o_client->login($login);
         if ($client) {
             if (password_verify($pwd, $client->password)) {
-                session_start();
+                if(session_status() !== PHP_SESSION_ACTIVE)
+                    session_start();
                 $_SESSION['user'] = TableFactory::getValuesArray($client);
                 return true;
             }

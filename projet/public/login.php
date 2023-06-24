@@ -1,10 +1,20 @@
 <?php
-include("header.php");
+include_once("../controller/LoginController.php");
+$login_error = false;
 if (isset($_POST['login']) && !empty($_POST['email']) && !empty($_POST['pwd'])) {
-    echo "login in réussi";
+  $login = new LoginController();
+  if ($login->login($_POST['email'], $_POST['pwd'])) {
+    header("Location:/public/product.php");
+  } else {
+    $login_error = true;
+  }
+}
+include_once("header.php");
+if ($login_error) {
+  echo "Vérifier login et pwd";
 }
 ?>
-<form action="#" >
+<form action="#" method="post">
   <div class="form-group">
     <label for="exampleInputEmail1">Email address</label>
     <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">

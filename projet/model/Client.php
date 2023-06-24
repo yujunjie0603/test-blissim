@@ -5,7 +5,7 @@
  * pour le test blissim
  */
 
-include_once('./AbstractBlissim.php');
+include_once('AbstractBlissim.php');
 
 class Client extends AbstractBlissim
 {

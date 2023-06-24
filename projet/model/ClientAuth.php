@@ -1,6 +1,7 @@
 <?php
-include_once("./DataConditions.php");
-include_once("./Client.php");
+include_once("InterfaceDataConditions.php");
+include_once("Client.php");
+include_once("MysqlConnect.php");
 
 class ClientAuth implements DataConditions
 {
@@ -23,8 +24,9 @@ class ClientAuth implements DataConditions
 
     public function getDataByConditions($condition)
     {
-        $sql = "SELECT id WHERE ";
-        $sql . $condition;
+        $sql = "SELECT id FROM " . $this->_table . " WHERE ";
+        $sql .= $condition;
+
         $res = $this->_db->query($sql);
         $val = $res->fetch_assoc();
         if ($val) {
