@@ -12,8 +12,10 @@ class LoginController
      */
     public function login($login, $pwd) {
         $o_client = new ClientAuth();
+        // trouve le client par login
         $client = $o_client->login($login);
         if ($client) {
+            // vérifier si le password est identique
             if (password_verify($pwd, $client->password)) {
                 if(session_status() !== PHP_SESSION_ACTIVE)
                     session_start();
