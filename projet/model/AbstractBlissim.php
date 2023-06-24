@@ -58,10 +58,8 @@ abstract class AbstractBlissim
             $types = str_repeat('s', count($a_data));
             $sql = "INSERT INTO " . $this->_tablename . " (" . implode(',', array_keys($a_data)) . ") VALUES (" . $in . ")";
             $stmt = $this->_db->prepare($sql);
-            var_dump($a_data);
             $stmt->bind_param($types, ...$insert_data);
             if ($stmt->execute()) {
-                echo "33333333333333";
                 // ini valeur id
                 return $this->id = $stmt->insert_id;
             } else {
