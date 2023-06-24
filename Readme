@@ -3,5 +3,8 @@
 "docker exec -i test_blissim-db-1 mysql -uuser_blissim -ppwd_blissim blissim < ./blissim.sql"
 3. L'interface de site : "http://localhost:82/public/"
 4. L'interface de phpmysadmin: http://localhost:8082/
+5. dans la base, il y a deux utilisateurs test. 
+    user1 => login: test@blissim.com, pwd: test
+    user2 => login: yulong@gmail.com, pwd: test
 
 
