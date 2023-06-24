@@ -1,6 +1,7 @@
 1. Lancer le container par " docker compose up -d"
-2. L'interface de site : "http://localhost:82/public/"
-3. L'interface de phpmysadmin: http://localhost:8082/
-4. Pour restaurer les data, Lance cette ligne commande à la racine de projet(meme niveau que fichier blissim.sql):
+2. Pour restaurer les data, Lance cette ligne commande à la racine de projet(meme niveau que fichier blissim.sql):
 "docker exec -i test_blissim-db-1 mysql -uuser_blissim -ppwd_blissim blissim < ./blissim.sql"
+3. L'interface de site : "http://localhost:82/public/"
+4. L'interface de phpmysadmin: http://localhost:8082/
+
 
