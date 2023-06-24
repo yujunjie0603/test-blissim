@@ -15,8 +15,8 @@ class ClientsComments implements DataConditions
     {
         $condition = " id = '" . $id . "'"; 
         $client_comment = $this->getDataByConditions($condition);
-        if (count($client_comment)) {
-            return $client_comment[0];
+        if ($client_comment) {
+            return $client_comment;
         }
         return $client_comment;
 
@@ -30,7 +30,7 @@ class ClientsComments implements DataConditions
         return $this->getDataByConditions($condition);
     }
     public function getClientCommentByClientProduct($id_client, $id_product){
-        $condition = " id_product = '" . $this->_db->real_escape_string($id_product) . "'"; 
+        $condition = " id_product = '" . $this->_db->real_escape_string($id_product) . "' AND id_client = '" . $this->_db->real_escape_string($id_client) . "'"; 
         return $this->getDataByConditions($condition);
     }
 
@@ -42,9 +42,11 @@ class ClientsComments implements DataConditions
         $res = $this->_db->query($sql);
         if ($res && $res->num_rows) {
             while($val = $res->fetch_assoc()) {
-                $liste_client_comments = new ClientComment($val['id']);
+                $liste_client_comments[] = new ClientComment($val['id']);
             }
+            return $liste_client_comments;
         }
-        return $liste_client_comments;
+
+        return false;
     }
 }

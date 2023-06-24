@@ -6,12 +6,9 @@ if (empty($_GET['id'])) {
     header('Location:/public/index.php');
     exit;
 } else {
-    include("header.php");
     $product = new ProductController($_GET['id']);
     $a_product = TableFactory::getValuesArray($product->product);
-    if ($a_product['id']) {
-        $comments = ClientsCommentsController::getClientCommentByProduct($a_product['id']);
-    }
+    include("header.php");
 ?>
     <div>
         <label for="">Name : </label>
@@ -25,24 +22,9 @@ if (empty($_GET['id'])) {
         <label for="">Price : </label>
         <p><?=$a_product['price'];?></p>
     </div>
+    <hr />
 <?php
-    if (count($comments)) {
-        foreach($comments as $comment) {
-?>
-        <p><?=$comment->comment;?></p>
-<?php
-        }
-    }
-    if (!empty($_SESSION['user'])) {
-?>
-    <form>
-        <label for="">commentaire: </label>
-        <textarea name="comment">
-            
-        </textarea>
-    </form>
-<?php
-    }
+    include("comments.php");
 }
 include("footer.php");
 ?>

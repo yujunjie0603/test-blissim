@@ -18,9 +18,17 @@ class ClientCommentController
     {
         try {
             foreach($param as $key => $value) {
-                $this->client_comment->$key = $value;
+                if (array_key_exists($key, $this->client_comment->liste_fields)) {
+                    echo "999999999999999999999999";
+                    $this->client_comment->$key = $value;
+                }
             }
-            $this->client_comment->create();
+            $this->client_comment->id_client = $_SESSION['user']['id'];
+            if ($this->client_comment->id) {
+                $this->client_comment->update();
+            } else {
+                $this->client_comment->create();
+            }
         } catch (\Throwable $th) {
             
         }

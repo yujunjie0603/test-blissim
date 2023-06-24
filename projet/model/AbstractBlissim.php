@@ -1,4 +1,5 @@
-<?php	
+<?php
+include_once("MysqlConnect.php");
 abstract class AbstractBlissim
 {
 	protected $_db;
@@ -45,16 +46,24 @@ abstract class AbstractBlissim
     public function save($type)
     {
 		$a_data = $this->getArrayDataBase();
+        $insert_data = array();
         if (!$this->id && $type == "create"){
             // vérifier les data avec real_escape_string
-            foreach ($a_data as $key => $value) {
-                // ce requete marche que pour mysql, il y aura de problème avec mariadb a cause de valeur vide
-                // pour l'attact inject, utilise real_escape_string et mettre la valeur dans '' 
-                $sql = "INSERT INTO " . $this->_tablename . " (" . implode(',', array_keys($a_data)) . ") VALUES ('" . implode('\',\'', $a_data) . "') ";
+            unset($a_data['id']);
+            foreach($a_data as $value) {
+                $insert_data[] = $value;
             }
-            if ($this->_db->query($sql)) {
+            $sql_fields = "";
+            $in = str_repeat('?,', count($a_data) - 1) . '?';
+            $types = str_repeat('s', count($a_data));
+            $sql = "INSERT INTO " . $this->_tablename . " (" . implode(',', array_keys($a_data)) . ") VALUES (" . $in . ")";
+            $stmt = $this->_db->prepare($sql);
+            var_dump($a_data);
+            $stmt->bind_param($types, ...$insert_data);
+            if ($stmt->execute()) {
+                echo "33333333333333";
                 // ini valeur id
-                return $this->id = $this->_db->insert_id;
+                return $this->id = $stmt->insert_id;
             } else {
                 throw new Exception('Erreur création');
             }
